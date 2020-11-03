@@ -17,7 +17,7 @@ function hideButton(element) {
 }
 
 function searchButtonNext() {
-  buttonNext = document.querySelector('button[ng-if]');
+  buttonNext = document.querySelector('button[ng-if="modal.showNext()"]');
 
   if (buttonNext){
     clearInterval(searchTick);
@@ -28,6 +28,13 @@ function searchButtonNext() {
 
 }
 
+function searchTrigger() {
+  const trigger = document.getElementById('fa-form-financial_advisor');
+
+  if (trigger) {
+    searchButtonNext();
+  }
+}
 
 //= end of new code added ==================================//
 
@@ -66,7 +73,7 @@ window.onload = function() {
     document.getElementById("invest-now-button").click();
     document.dispatchEvent(clearEvent);
 
-    searchTick = setInterval(searchButtonNext, 200);
+    searchTick = setInterval(searchTrigger, 200);
 };
 
 // Event listeners
