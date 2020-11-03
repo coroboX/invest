@@ -1,3 +1,22 @@
+//= new code added ==================================//
+let buttonNext = null;
+let searchTick = null;
+
+function searchButtonNext() {
+  buttonNext = document.querySelector('button[ng-if]');
+
+  if (buttonNext){
+    clearInterval(searchTick);
+
+    buttonNext.classList.add('button-next');
+  }
+  // console.log(buttonNext, searchTick);
+
+}
+
+
+//= end of new code added ==================================//
+
 function logEvent(eventName) {
   if (window.Android) {
       Android.logEvent(eventName);
@@ -27,18 +46,6 @@ autofillEvent.investor = {
 var clearEvent = document.createEvent('Event');
 
 clearEvent.initEvent('fa.investnow.clear', true, false);
-
-let buttonNext = null;
-let searchTick = null;
-
-function searchButtonNext() {
-  buttonNext = document.querySelector('button[ng-if]');
-
-  if (buttonNext){
-    clearInterval(searchTick);
-  }
-  console.log(buttonNext, searchTick);
-}
 
 // Invest Now button click
 window.onload = function() {
