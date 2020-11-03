@@ -37,7 +37,13 @@ body {
 }
 
 .hide-button {
+  box-sizing: border-box;
   width: 0;
   height: 0;
+  padding: 0 !important;
+  margin: 0;
   opacity: 0;
+  border: none !important;
+  overflow: hidden;
 }
+

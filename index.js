@@ -5,7 +5,7 @@ let buttonTest = document.createElement("button");
 buttonTest.innerHTML = "Custom Button"
 
 function addCustomButton() {
-  buttonNext.classList.add('button-next');
+  buttonTest.onclick = () => buttonNext.click();
   buttonNext.parentNode.insertBefore(buttonTest, buttonNext);
 }
 
