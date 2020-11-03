@@ -4,90 +4,9 @@
     <title>Investments</title>
     <meta charset="UTF-8">
     <script src="https://my-sandbox.fundamerica.com/widgets/invest_now.min.js" id="fa-invest-now-launcher"></script>
-    <style type="text/css">
-        body {
-            background-color: black;
-        }
-        .button-container {
-            margin-top: 50px;
-            width: 1px;
-            height: 1px;
-            display: none;
-        }
-        .modal-header {
-            background-color: #2d2a2e;
-            color: white;
-        }
-        .modal-body {
-            background-color: #2d2a2e;
-        }
-        .modal-footer {
-            background-color: #2d2a2e;
-        }
-        .ssl_inner {
-            display: none;
-        }
-        .fa-times {
-            color: white;
-        }
-        .ng-binding {
-            color: white;
-        }
-        .alert {
-            display: none;
-        }
-        .popover {
-            color: #d4ab72;
-        }
-        #technology-by-fa {
-            color: white;
-        }
-    </style>
-    <script type="text/javascript">
-        function logEvent(eventName) {
-            if (window.Android) {
-                Android.logEvent(eventName);
-            }
-
-            if (
-                window.webkit &&
-                window.webkit.messageHandlers &&
-                window.webkit.messageHandlers.iosListener
-            ) {
-                window.webkit.messageHandlers.iosListener.postMessage(eventName);
-            }
-
-            window.parent.postMessage(eventName, '*')
-        }
-        var autofillEvent = document.createEvent('Event');
-        autofillEvent.initEvent('fa.investnow.autofill', true, false);
-        autofillEvent.investor = {
-            "type": 'person',
-            "name": '{{ $user->full_name }}',
-            "amount": '{{ $tier->value }}',
-            "email": '{{ $user->email }}',
-        };
-        var clearEvent = document.createEvent('Event');
-        clearEvent.initEvent('fa.investnow.clear', true, false);
-        // Invest Now button click
-        window.onload = function() {
-            document.getElementById("invest-now-button").click();
-            document.dispatchEvent(clearEvent);
-        };
-        // Event listeners
-        document.addEventListener('fa.investnow.close', function(e){
-            document.dispatchEvent(clearEvent);
-            logEvent('Close');
-        });
-        document.addEventListener('fa.investnow.open', function(e){
-            document.dispatchEvent(clearEvent);
-            document.dispatchEvent(autofillEvent);
-            logEvent('Open');
-        });
-        document.addEventListener('fa.investnow.success', function(e){
-            logEvent('Success')
-        });
-    </script>
+    
+    <!-- <style type="text/css"></style> -->
+    <!-- <script type="text/javascript"></script> -->
 </head>
 <body>
 <div class="button-container">
@@ -97,5 +16,7 @@
             class="fa-invest-now-btn fa-invest-now-btn-4"
             id="invest-now-button">Invest Now</button>
 </div>
+
+<script src="index.js" id="fa-invest-now-launcher"></script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+body {
+  background-color: black;
+}
+.button-container {
+  margin-top: 50px;
+  width: 1px;
+  height: 1px;
+  display: none;
+}
+.modal-header {
+  background-color: #2d2a2e;
+  color: white;
+}
+.modal-body {
+  background-color: #2d2a2e;
+}
+.modal-footer {
+  background-color: #2d2a2e;
+}
+.ssl_inner {
+  display: none;
+}
+.fa-times {
+  color: white;
+}
+.ng-binding {
+  color: white;
+}
+.alert {
+  display: none;
+}
+.popover {
+  color: #d4ab72;
+}
+#technology-by-fa {
+  color: white;
+}
