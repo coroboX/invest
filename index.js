@@ -5,62 +5,29 @@ let originClear = null;
 
 let searchTick = null;
 
-// let next = document.createElement("button");
-// next.innerHTML = "Next";
-// let prev = document.createElement("button");
-// prev.innerHTML = "Prev";
-// let clear = document.createElement("button");
-// clear.innerHTML = "StartOver";
-
-const clickButtonNext = () => {
-  return originNext.click();
+const clickNext = () => {
+  if (originNext) {
+    console.log('Next clicked!');
+    return originNext.click();
+  }
 }
 
-const clickButtonPrev = () => {
-  return originPrev.click();
+const clickPrev = () => {
+  if (originPrev) {
+    console.log('Prev clicked!');
+    return originPrev.click();
+  }
 }
 
-const clickButtonClear = () => {
-  return originClear.click();
+const clickClear = () => {
+  if (originClear) {
+    console.log('Clear clicked!');
+    return originClear.click();
+  }
 }
-
-// function addCustomButton(origin, custom, click) {
-//   custom.onclick = click;
-//   origin.parentNode.insertBefore(custom, origin);
-// }
 
 function hideButton(element) {
   element.classList.add('hide-button');
-}
-
-function searchOriginNext() {
-  originNext = document.querySelector('button[ng-if="modal.showNext()"]');
-
-  if (originNext){
-    // clearInterval(searchTick);
-    hideButton(originNext);
-    // addCustomButton(originNext, next, clickButtonNext);
-  }
-}
-
-function searchOriginPrev() {
-  originPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
-
-  if (originPrev){
-    // clearInterval(searchTick);
-    hideButton(originPrev);
-    // addCustomButton(originPrev, prev, clickButtonPrev);
-  }
-}
-
-function searchOriginClear() {
-  originClear = document.querySelector('button[ng-if="modal.showClear()"]');
-
-  if (originClear){
-    // clearInterval(searchTick);
-    hideButton(originClear);
-    // addCustomButton(originClear, clear, clickButtonClear);
-  }
 }
 
 function seekAndHide() {
@@ -69,15 +36,18 @@ function seekAndHide() {
   const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
 
   if (oldNext && !oldNext.classList.contains('hide-button')) {
-    searchOriginNext();
+    hideButton(oldNext);
+    originNext = oldNext;
   }
 
   if (oldPrev && !oldPrev.classList.contains('hide-button')) {
-    searchOriginPrev();
+    hideButton(oldPrev);
+    originPrev = oldPrev;
   }
 
   if (oldClear && !oldClear.classList.contains('hide-button')) {
-    searchOriginClear();
+    hideButton(oldClear);
+    originClear = oldClear;
   }
 }
 
