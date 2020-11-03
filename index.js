@@ -1,38 +1,60 @@
 //= new code added ==================================//
-let buttonNext = null;
-let searchTick = null;
-let buttonTest = document.createElement("button");
-buttonTest.innerHTML = "Custom Button"
+let originNext = null;
+let originPrev = null;
+let buttonStartOver = null;
 
-function addCustomButton() {
-  buttonTest.onclick = () => buttonNext.click();
-  buttonNext.parentNode.insertBefore(buttonTest, buttonNext);
+let searchTick = null;
+
+let next = document.createElement("button");
+next.innerHTML = "Next";
+let prev = document.createElement("button");
+prev.innerHTML = "Prev";
+let startOver = document.createElement("button");
+startOver.innerHTML = "StartOver";
+
+const clickButtonNext = () => {
+  return originNext.click();
+}
+
+const clickButtonPrev = () => {
+  return originPrev.click();
+}
+
+function addCustomButton(origin, custom, click) {
+  custom.onclick = click;
+  origin.parentNode.insertBefore(custom, origin);
 }
 
 function hideButton(element) {
   element.classList.add('hide-button');
-  // element.style.width = "0px";
-  // element.style.height = "0px";
-  // element.style.opacity = 0;
 }
 
-function searchButtonNext() {
-  buttonNext = document.querySelector('button[ng-if="modal.showNext()"]');
+function searchOriginNext() {
+  originNext = document.querySelector('button[ng-if="modal.showNext()"]');
 
-  if (buttonNext){
+  if (originNext){
     clearInterval(searchTick);
-    hideButton(buttonNext);
-    addCustomButton();
+    hideButton(originNext);
+    addCustomButton(originNext, next, clickButtonNext);
+    searchTick = setInterval(searchOriginPrev, 200);
   }
-  console.log(buttonNext, searchTick);
+}
 
+function searchOriginPrev() {
+  originPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
+
+  if (originPrev){
+    clearInterval(searchTick);
+    hideButton(originPrev);
+    addCustomButton(originPrev, prev, clickButtonPrev);
+  }
 }
 
 function searchTrigger() {
   const trigger = document.getElementById('fa-form-financial_advisor');
 
   if (trigger) {
-    searchButtonNext();
+    searchOriginNext();
   }
 }
 
@@ -59,9 +81,9 @@ autofillEvent.initEvent('fa.investnow.autofill', true, false);
 
 autofillEvent.investor = {
     "type": 'person',
-    "name": '{{ $user->full_name }}',
-    "amount": '{{ $tier->value }}',
-    "email": '{{ $user->email }}',
+    "name": 'name',
+    "amount": '432',
+    "email": 'user@g.com',
 };
 
 var clearEvent = document.createEvent('Event');
