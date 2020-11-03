@@ -28,10 +28,24 @@ var clearEvent = document.createEvent('Event');
 
 clearEvent.initEvent('fa.investnow.clear', true, false);
 
+let buttonNext = null;
+let searchTick = null;
+
+function searchButtonNext() {
+  buttonNext = document.querySelector('button[ng-if]');
+
+  if (buttonNext){
+    clearInterval(searchTick);
+  }
+  console.log(buttonNext, searchTick);
+}
+
 // Invest Now button click
 window.onload = function() {
     document.getElementById("invest-now-button").click();
     document.dispatchEvent(clearEvent);
+
+    searchTick = setInterval(searchButtonNext, 200);
 };
 
 // Event listeners
