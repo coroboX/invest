@@ -5,12 +5,12 @@ let originClear = null;
 
 let searchTick = null;
 
-let next = document.createElement("button");
-next.innerHTML = "Next";
-let prev = document.createElement("button");
-prev.innerHTML = "Prev";
-let clear = document.createElement("button");
-clear.innerHTML = "StartOver";
+// let next = document.createElement("button");
+// next.innerHTML = "Next";
+// let prev = document.createElement("button");
+// prev.innerHTML = "Prev";
+// let clear = document.createElement("button");
+// clear.innerHTML = "StartOver";
 
 const clickButtonNext = () => {
   return originNext.click();
@@ -24,10 +24,10 @@ const clickButtonClear = () => {
   return originClear.click();
 }
 
-function addCustomButton(origin, custom, click) {
-  custom.onclick = click;
-  origin.parentNode.insertBefore(custom, origin);
-}
+// function addCustomButton(origin, custom, click) {
+//   custom.onclick = click;
+//   origin.parentNode.insertBefore(custom, origin);
+// }
 
 function hideButton(element) {
   element.classList.add('hide-button');
@@ -39,7 +39,7 @@ function searchOriginNext() {
   if (originNext){
     // clearInterval(searchTick);
     hideButton(originNext);
-    addCustomButton(originNext, next, clickButtonNext);
+    // addCustomButton(originNext, next, clickButtonNext);
   }
 }
 
@@ -49,7 +49,7 @@ function searchOriginPrev() {
   if (originPrev){
     // clearInterval(searchTick);
     hideButton(originPrev);
-    addCustomButton(originPrev, prev, clickButtonPrev);
+    // addCustomButton(originPrev, prev, clickButtonPrev);
   }
 }
 
@@ -59,7 +59,7 @@ function searchOriginClear() {
   if (originClear){
     // clearInterval(searchTick);
     hideButton(originClear);
-    addCustomButton(originClear, clear, clickButtonClear);
+    // addCustomButton(originClear, clear, clickButtonClear);
   }
 }
 
