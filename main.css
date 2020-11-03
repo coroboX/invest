@@ -35,3 +35,9 @@ body {
 #technology-by-fa {
   color: white;
 }
+
+.hide-button {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}

@@ -1,16 +1,30 @@
 //= new code added ==================================//
 let buttonNext = null;
 let searchTick = null;
+let buttonTest = document.createElement("button");
+buttonTest.innerHTML = "Custom Button"
+
+function addCustomButton() {
+  buttonNext.classList.add('button-next');
+  buttonNext.parentNode.insertBefore(buttonTest, buttonNext);
+}
+
+function hideButton(element) {
+  element.classList.add('hide-button');
+  // element.style.width = "0px";
+  // element.style.height = "0px";
+  // element.style.opacity = 0;
+}
 
 function searchButtonNext() {
   buttonNext = document.querySelector('button[ng-if]');
 
   if (buttonNext){
     clearInterval(searchTick);
-
-    buttonNext.classList.add('button-next');
+    hideButton(buttonNext);
+    addCustomButton();
   }
-  // console.log(buttonNext, searchTick);
+  console.log(buttonNext, searchTick);
 
 }
 
