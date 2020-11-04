@@ -63,6 +63,31 @@ function findAngularModal() {
     console.log('modal is found');
   }
 }
+
+function checkBothButtons() {
+  if (!angularModal) {
+    console.log("not ready");
+    return;
+  }
+
+  const current = angularModal.modal.getStateIndex();
+  const total = angularModal.modal.invest_now_investment.states.length;
+  const isProcessed = !angularModal.modal.processing && !angularModal.modal.isLoading;
+
+  if (isProcessed) {
+    if (current === 0) {
+      console.log("show only Next");
+    } else if (current < total - 1) {
+      console.log("show Both");
+    } else {
+      console.log("Final!");
+    }
+  } else {
+    console.log("page is in processing");
+  }
+}
+
+
 //= end of new code added ==================================//
 
 function logEvent(eventName) {
@@ -102,6 +127,7 @@ window.onload = function() {
 
     buttonsTick = setInterval(seekAndHide, 100);
     angularModalTick = setInterval(findAngularModal, 133);
+    let eventsTick = setInterval(checkBothButtons, 500);
 };
 
 // Event listeners
