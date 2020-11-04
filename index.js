@@ -4,12 +4,15 @@ let originPrev = null;
 let originClear = null;
 
 let searchTick = null;
+let eventsTick = null;
 
 let angularModal = null;
 
 const clickNext = () => {
   if (originNext) {
     console.log('Next clicked!');
+    startEventsTick();
+
     return originNext.click();
   }
 }
@@ -17,6 +20,8 @@ const clickNext = () => {
 const clickPrev = () => {
   if (originPrev) {
     console.log('Prev clicked!');
+    startEventsTick();
+
     return originPrev.click();
   }
 }
@@ -24,6 +29,8 @@ const clickPrev = () => {
 const clickClear = () => {
   if (originClear) {
     console.log('Clear clicked!');
+    startEventsTick();
+
     return originClear.click();
   }
 }
@@ -76,18 +83,24 @@ function checkBothButtons() {
 
   if (isProcessed) {
     if (current === 0) {
-      console.log("show only Next");
+      console.log("event =======> show Next");
+      logEvent("show Next");
     } else if (current < total - 1) {
-      console.log("show Both");
+      console.log("event =======> show Both");
+      logEvent("show Both");
     } else {
-      console.log("Final!");
+      console.log("event =======> Final");
+      logEvent("Final");
     }
+    clearInterval(eventsTick);
   } else {
     console.log("page is in processing");
   }
 }
 
-
+function startEventsTick() {
+  eventsTick = setInterval(checkBothButtons, 100);
+}
 //= end of new code added ==================================//
 
 function logEvent(eventName) {
@@ -127,7 +140,7 @@ window.onload = function() {
 
     buttonsTick = setInterval(seekAndHide, 100);
     angularModalTick = setInterval(findAngularModal, 133);
-    let eventsTick = setInterval(checkBothButtons, 500);
+    startEventsTick();
 };
 
 // Event listeners
