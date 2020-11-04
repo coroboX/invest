@@ -6,6 +6,9 @@ let originClear = null;
 let searchTick = null;
 let eventsTick = null;
 
+let customWatching = false;
+let customWatched = false;
+
 let angularModal = null;
 
 const clickNext = () => {
@@ -81,13 +84,20 @@ function checkBothButtons() {
   const total = angularModal.modal.invest_now_investment.states.length;
   const isProcessed = !angularModal.modal.processing && !angularModal.modal.isLoading;
 
-  if (isProcessed) {
-    if (current === 0) {
-      console.log("event =======> show Next");
-      logEvent("show Next");
-    } else if (current < total - 1) {
+  if (customWatching && !isProcessed) {
+    customWatched = true;
+  }
+
+  if (customWatching && customWatched && isProcessed) {
+    customWatched = false;
+    customWatching = false;
+
+    if (angularModal.modal.showNext() && angularModal.modal.showPrev()) {
       console.log("event =======> show Both");
       logEvent("show Both");
+    } else if (angularModal.modal.showNext() && !angularModal.modal.showPrev()) {
+      console.log("event =======> show Next");
+      logEvent("show Next");
     } else {
       console.log("event =======> Final");
       logEvent("Final");
@@ -100,6 +110,8 @@ function checkBothButtons() {
 
 function startEventsTick() {
   eventsTick = setInterval(checkBothButtons, 100);
+  customWatching = true;
+  customWatched = false;
 }
 //= end of new code added ==================================//
 
