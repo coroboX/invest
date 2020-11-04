@@ -5,6 +5,8 @@ let originClear = null;
 
 let searchTick = null;
 
+let angularModal = null;
+
 const clickNext = () => {
   if (originNext) {
     console.log('Next clicked!');
@@ -51,6 +53,16 @@ function seekAndHide() {
   }
 }
 
+
+function findAngularModal() {
+  let modalElement = document.querySelector('.modal');
+
+  if (modalElement) {
+    angularModal = angular.element(modalElement).scope();
+    clearInterval(angularModalTick);
+    console.log('modal is found');
+  }
+}
 //= end of new code added ==================================//
 
 function logEvent(eventName) {
@@ -88,7 +100,8 @@ window.onload = function() {
     document.getElementById("invest-now-button").click();
     document.dispatchEvent(clearEvent);
 
-    searchTick = setInterval(seekAndHide, 100);
+    buttonsTick = setInterval(seekAndHide, 100);
+    angularModalTick = setInterval(findAngularModal, 133);
 };
 
 // Event listeners
