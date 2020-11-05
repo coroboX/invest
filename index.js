@@ -46,6 +46,7 @@ function seekAndHide() {
   const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
   const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
   const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
+  const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
 
   if (oldNext && !oldNext.classList.contains('hide-button')) {
     hideButton(oldNext);
@@ -60,6 +61,10 @@ function seekAndHide() {
   if (oldClear && !oldClear.classList.contains('hide-button')) {
     hideButton(oldClear);
     originClear = oldClear;
+  }
+
+  if (oldClose && !oldClose.classList.contains('hide-button')) {
+    hideButton(oldClose);
   }
 }
 
