@@ -165,6 +165,7 @@ window.onload = function() {
     document.getElementById("invest-now-button").click();
     // document.dispatchEvent(clearEvent);
     console.log('window.onload');
+
     buttonsTick = setInterval(seekAndHide, 100);
     angularModalTick = setInterval(findAngularModal, 133);
     startEventsTick();
