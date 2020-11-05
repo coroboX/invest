@@ -40,6 +40,7 @@ const clickClear = () => {
 
 function hideButton(element) {
   element.classList.add('hide-button');
+  element.style.overflow = 'hidden';
 }
 
 function seekAndHide() {
