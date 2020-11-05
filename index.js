@@ -126,6 +126,7 @@ function clearForm() {
 
 function ready() {
   console.log("document.DOMContentLoaded");
+  localStorage.removeItem('ls.invest_now.sandbox');
 }
 
 document.addEventListener("DOMContentLoaded", ready);
