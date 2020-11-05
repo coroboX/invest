@@ -113,6 +113,16 @@ function startEventsTick() {
   customWatching = true;
   customWatched = false;
 }
+
+function clearForm() {
+  document.dispatchEvent(clearEvent);
+}
+
+function ready() {
+  console.log("document.DOMContentLoaded");
+}
+
+document.addEventListener("DOMContentLoaded", ready);
 //= end of new code added ==================================//
 
 function logEvent(eventName) {
@@ -142,14 +152,13 @@ autofillEvent.investor = {
 };
 
 var clearEvent = document.createEvent('Event');
-
 clearEvent.initEvent('fa.investnow.clear', true, false);
 
 // Invest Now button click
 window.onload = function() {
     document.getElementById("invest-now-button").click();
-    document.dispatchEvent(clearEvent);
-
+    // document.dispatchEvent(clearEvent);
+    console.log('window.onload');
     buttonsTick = setInterval(seekAndHide, 100);
     angularModalTick = setInterval(findAngularModal, 133);
     startEventsTick();
