@@ -126,7 +126,17 @@ function clearForm() {
 
 function ready() {
   console.log("document.DOMContentLoaded");
-  localStorage.removeItem('ls.invest_now.sandbox');
+  const storageItem = 'ls.invest_now.sandbox';
+  const store = JSON.parse(localStorage.getItem(storageItem));
+
+  console.log(store.invest_now_investment.state);
+
+  store.invest_now_investment.state = store.invest_now_investment.states[0].name;
+  localStorage.setItem(storageItem, JSON.stringify(store));
+
+  console.log(store.invest_now_investment.state);
+
+  // localStorage.removeItem(storageItem);
 }
 
 document.addEventListener("DOMContentLoaded", ready);
