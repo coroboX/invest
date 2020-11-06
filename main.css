@@ -8,14 +8,14 @@ body {
   display: none;
 }
 .modal-header {
-  background-color: #2d2a2e;
+  background-color: #000000;
   color: white;
 }
 .modal-body {
-  background-color: #2d2a2e;
+  background-color: #000000;
 }
 .modal-footer {
-  background-color: #2d2a2e;
+  background-color: #000000;
 }
 .ssl_inner {
   display: none;
