@@ -71,10 +71,12 @@ body {
 .gold-filled {
   color: #000 !important;
   background: #D4AB72 !important;
+  background-image: linear-gradient(to bottom, #D4AB72 0, #977c56 100%) !important;
 }
 
 .gold-empty {
   color: #999696 !important;
   background: #191919 !important;
+  background-image: linear-gradient(to bottom, #2b2319 0, #191919 100%) !important;
   border: 2px solid #999696 !important;
 }

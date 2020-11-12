@@ -55,9 +55,16 @@ function seekAndStyle() {
   const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
   const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
   const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
+  const progressBar = document.querySelector(`div[ng-style="{'width': modal.percentComplete() + '%' }"]`);
 
   const goldFilled = 'gold-filled';
   const goldEmpty = 'gold-empty';
+
+  if (progressBar){
+    progressBar.style.backgroundImage = 'linear-gradient(to bottom, #D4AB72 0, #B19164 100%)';
+    progressBar.style.backgroundColor = '#D4AB72';
+    progressBar.style.color = "#000";
+  }
 
   if (oldNext && !oldNext.classList.contains(goldFilled)) {
     restyleButton(oldNext, goldFilled);
