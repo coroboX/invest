@@ -39,12 +39,16 @@ const clickClear = () => {
 }
 
 function hideButton(element) {
-  element.classList.add('hide-button');
-  element.style.overflow = 'hidden';
+  if (element) {
+    element.classList.add('hide-button');
+    element.style.overflow = 'hidden';
+  }
 }
 
 function restyleButton(element, style) {
-  element.classList.add(style);
+  if (element) {
+    element.classList.add(style);
+  }
 }
 
 function seekAndStyle() {
@@ -56,9 +60,10 @@ function seekAndStyle() {
   const goldEmpty = 'gold-empty';
 
   if (oldNext && !oldNext.classList.contains(goldFilled)) {
-    restyleButton(oldPrev, goldFilled);
+    restyleButton(oldNext, goldFilled);
     originNext = oldNext;
   }
+
 
   if (oldPrev && !oldPrev.classList.contains(goldEmpty)) {
     restyleButton(oldPrev, goldEmpty);
@@ -198,7 +203,7 @@ window.onload = function() {
     console.log('window.onload');
 
     // buttonsTick = setInterval(seekAndHide, 100);
-    buttonsTick = setInterval(seekAndStyle, 100);
+    buttonsTick = setInterval(seekAndStyle, 1000);
     
     angularModalTick = setInterval(findAngularModal, 133);
     startEventsTick();
