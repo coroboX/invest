@@ -43,6 +43,34 @@ function hideButton(element) {
   element.style.overflow = 'hidden';
 }
 
+function restyleButton(element, style) {
+  element.classList.add(style);
+}
+
+function seekAndStyle() {
+  const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
+  const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
+  const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
+
+  const goldFilled = 'gold-filled';
+  const goldEmpty = 'gold-empty';
+
+  if (oldNext && !oldNext.classList.contains(goldFilled)) {
+    restyleButton(oldPrev, goldFilled);
+    originNext = oldNext;
+  }
+
+  if (oldPrev && !oldPrev.classList.contains(goldEmpty)) {
+    restyleButton(oldPrev, goldEmpty);
+    originPrev = oldPrev;
+  }
+
+  if (oldClear && !oldClear.classList.contains(goldEmpty)) {
+    restyleButton(oldClear, goldEmpty);
+    originClear = oldClear;
+  }
+}
+
 function seekAndHide() {
   const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
   const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
@@ -169,7 +197,9 @@ window.onload = function() {
     // document.dispatchEvent(clearEvent);
     console.log('window.onload');
 
-    buttonsTick = setInterval(seekAndHide, 100);
+    // buttonsTick = setInterval(seekAndHide, 100);
+    buttonsTick = setInterval(seekAndStyle, 100);
+    
     angularModalTick = setInterval(findAngularModal, 133);
     startEventsTick();
 };

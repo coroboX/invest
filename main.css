@@ -47,3 +47,33 @@ body {
   overflow: hidden;
 }
 
+.gold-filled,
+.gold-empty {
+  font-family: 'Poppins';
+  font-size: 14px;
+  font-weight: bold;
+
+  width: auto;
+  margin: 0;
+  padding: 22px 38px;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  transition: 0.1s opacity linear;
+}
+
+.gold-filled {
+  color: #000;
+  background: #D4AB72;
+}
+
+.gold-empty {
+  color: #999696;
+  background: #191919;
+  border: 2px solid #999696;
+}
