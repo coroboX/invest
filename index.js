@@ -67,6 +67,7 @@ function seekAndStyle() {
 
   if (oldPrev && !oldPrev.classList.contains(goldEmpty)) {
     restyleButton(oldPrev, goldEmpty);
+    oldPrev.style.marginRight = '72px';
     originPrev = oldPrev;
   }
 
