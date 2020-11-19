@@ -82,32 +82,50 @@ function seekAndStyle() {
     restyleButton(oldClear, goldEmpty);
     originClear = oldClear;
   }
+  seekAndHideClear();
 }
 
-function seekAndHide() {
-  const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
-  const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
-  const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
-  const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
+  function seekAndHideNext() {
+    const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
 
-  if (oldNext && !oldNext.classList.contains('hide-button')) {
-    hideButton(oldNext);
-    originNext = oldNext;
+    if (oldNext && !oldNext.classList.contains('hide-button')) {
+      hideButton(oldNext);
+      originNext = oldNext;
+    }
   }
 
-  if (oldPrev && !oldPrev.classList.contains('hide-button')) {
-    hideButton(oldPrev);
-    originPrev = oldPrev;
+  function seekAndHidePrev() {
+    const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
+
+    if (oldPrev && !oldPrev.classList.contains('hide-button')) {
+      hideButton(oldPrev);
+      originPrev = oldPrev;
+    }
   }
 
-  if (oldClear && !oldClear.classList.contains('hide-button')) {
-    hideButton(oldClear);
-    originClear = oldClear;
+  function seekAndHideClear() {
+    const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
+
+    if (oldClear && !oldClear.classList.contains('hide-button')) {
+      hideButton(oldClear);
+      originClear = oldClear;
+    }
   }
 
-  if (oldClose && !oldClose.classList.contains('hide-button')) {
-    hideButton(oldClose);
+  function seekAndHideClose() {
+    const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
+
+    if (oldClose && !oldClose.classList.contains('hide-button')) {
+      hideButton(oldClose);
+      originClose = oldClose;
+    }
   }
+
+  function seekAndHide() {
+    seekAndHideNext();
+    seekAndHidePrev();
+    seekAndHideClear();
+    seekAndHideClose();
 }
 
 
