@@ -2,6 +2,7 @@
 let originNext = null;
 let originPrev = null;
 let originClear = null;
+let originClose = null;
 
 let searchTick = null;
 let eventsTick = null;
@@ -38,6 +39,15 @@ const clickClear = () => {
   }
 }
 
+const clickClose = () => {
+  if (originClose) {
+    console.log('Close clicked!');
+    startEventsTick();
+
+    return originClose.click();
+  }
+}
+
 function hideButton(element) {
   if (element) {
     element.classList.add('hide-button');
@@ -55,7 +65,10 @@ function seekAndStyle() {
   const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
   const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
   const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
+  const oldCancel = document.querySelector('button[ng-click="modal.cancel()"]');
   const progressBar = document.querySelector(`div[ng-style="{'width': modal.percentComplete() + '%' }"]`);
+
+  const isDoneExist = document.querySelector('button.done-button');
 
   const goldFilled = 'gold-filled';
   const goldEmpty = 'gold-empty';
@@ -82,7 +95,22 @@ function seekAndStyle() {
     restyleButton(oldClear, goldEmpty);
     originClear = oldClear;
   }
+
   seekAndHideClear();
+  seekClose();
+
+  if (angularModal.modal.completed() && !isDoneExist) {
+    const buttonsWrapper = document.querySelector('div.modal-footer').children[0].children[0];
+
+    done = document.createElement('button');
+
+    done.innerHTML = 'Done';
+    done.className = "btn pull-right ng-scope gold-filled done-button";
+    done.setAttribute('type', 'button');
+    done.onclick = () => clickClose();
+
+    buttonsWrapper.appendChild(done);
+  }
 }
 
   function seekAndHideNext() {
@@ -121,6 +149,14 @@ function seekAndStyle() {
     }
   }
 
+  function seekClose() {
+    const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
+
+    if (oldClose) {
+      originClose = oldClose;
+    }
+  }
+
   function seekAndHide() {
     seekAndHideNext();
     seekAndHidePrev();
@@ -146,7 +182,7 @@ function checkBothButtons() {
   }
 
   const current = angularModal.modal.getStateIndex();
-  const total = angularModal.modal.invest_now_investment.states.length;
+  // const total = angularModal.modal.invest_now_investment.states.length;
   const isProcessed = !angularModal.modal.processing && !angularModal.modal.isLoading;
 
   if (customWatching && !isProcessed) {
@@ -229,7 +265,7 @@ window.onload = function() {
     console.log('window.onload');
 
     // buttonsTick = setInterval(seekAndHide, 100);
-    buttonsTick = setInterval(seekAndStyle, 1000);
+    buttonsTick = setInterval(seekAndStyle, 100);
     
     angularModalTick = setInterval(findAngularModal, 133);
     startEventsTick();
