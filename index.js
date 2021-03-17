@@ -9,7 +9,7 @@ let eventsTick = null;
 let customWatching = false;
 let customWatched = false;
 
-let angularModal = null;
+let angularModal = {};
 
 const clickNext = () => {
   if (originNext) {
@@ -69,11 +69,19 @@ function seekAndHide() {
     if (oldNext && !oldNext.classList.contains('hide-button')) {
       hideButton(oldNext);
       originNext = oldNext;
+      angularModal.modal = {
+        ...angularModal?.modal,
+        showNext: () => !!originNext,
+      }
     }
 
     if (oldPrev && !oldPrev.classList.contains('hide-button')) {
       hideButton(oldPrev);
       originPrev = oldPrev;
+      angularModal.modal = {
+        ...angularModal?.modal,
+        showPrev: () => !!originPrev,
+      }
     }
 
     if (oldClear && !oldClear.classList.contains('hide-button')) {
@@ -89,17 +97,17 @@ function seekAndHide() {
 
 function findAngularModal() {
   let modalElement = document.querySelector('.invest-now-modal');
-
-  if (modalElement) {
-    angularModal = angular.element(modalElement).scope();
-
-
-    // angularModal.modal = {
-    //   processing: false,
-    //   isLoading: false,
-    //   showNext: () => true,
-    //   showPrev: () => true,
-    // }
+  
+  if (!modalElement) {
+    angularModal.modal = {
+      processing: true,
+      isLoading: true,
+      showNext: () => false,
+      showPrev: () => false,
+    }
+  } else {
+    // angularModal = angular.element(modalElement).scope();
+    checkModalState();
 
     clearInterval(angularModalTick);
     console.log('modal is found', modalElement, angularModal);
@@ -107,13 +115,13 @@ function findAngularModal() {
 }
 
 function checkBothButtons() {
-  if (!angularModal) {
+  if (angularModal === {}) {
     console.log("not ready");
     return;
   }
 
-  // const current = angularModal.modal.getStateIndex();
-  // const total = angularModal.modal.invest_now_investment.states.length;
+  checkModalState();
+
   const isProcessed = !angularModal.modal.processing && !angularModal.modal.isLoading;
 
   if (customWatching && !isProcessed) {
@@ -140,11 +148,15 @@ function checkBothButtons() {
   }
 }
 
-function getSpinnerState() {
+function checkModalState() {
   const spinner = document.querySelector('.loading-spinner');
-  console.log(spinner.classList.contains('ng-hide') && spinner.classList.length === 2)
 
-  // return spinner.classList.contains('ng-hide') && spinner.classList.length === 2
+  angularModal.modal = {
+      processing: !spinner.classList.contains('ng-hide') || spinner.classList.length > 2,
+      isLoading: originNext?.childElementCount || originPrev?.childElementCount,
+      showNext: () => !!originNext,
+      showPrev: () => !!originPrev,
+    }
 }
 
 function startEventsTick() {
@@ -201,10 +213,10 @@ window.onload = function() {
     // document.dispatchEvent(clearEvent);
     console.log('window.onload');
 
-    // buttonsTick = setInterval(seekAndHide, 100);
-    // angularModalTick = setInterval(findAngularModal, 133);
+    buttonsTick = setInterval(seekAndHide, 100);
+    angularModalTick = setInterval(findAngularModal, 133);
 
-    // startEventsTick();
+    startEventsTick();
 };
 
 // Event listeners
