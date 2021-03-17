@@ -2,7 +2,6 @@
 let originNext = null;
 let originPrev = null;
 let originClear = null;
-let originClose = null;
 
 let searchTick = null;
 let eventsTick = null;
@@ -10,7 +9,7 @@ let eventsTick = null;
 let customWatching = false;
 let customWatched = false;
 
-let angularModal = null;
+let angularModal = {};
 
 const clickNext = () => {
   if (originNext) {
@@ -39,150 +38,90 @@ const clickClear = () => {
   }
 }
 
-const clickClose = () => {
-  if (originClose) {
-    console.log('Close clicked!');
-    startEventsTick();
-
-    return originClose.click();
-  }
-}
-
 function hideButton(element) {
-  if (element) {
     element.classList.add('hide-button');
     element.style.overflow = 'hidden';
-  }
 }
 
-function restyleButton(element, style) {
-  if (element) {
-    element.classList.add(style);
-  }
-}
-
-function seekAndStyle() {
+function seekAndHide() {
   const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
   const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
   const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
-  const oldCancel = document.querySelector('button[ng-click="modal.cancel()"]');
+  const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
   const progressBar = document.querySelector(`div[ng-style="{'width': modal.percentComplete() + '%' }"]`);
+  const popover = document.querySelector(`div[tooltip-animation-class="fade"]`);
+  const link = document.querySelector(`a[href="http://www.fundamerica.com"]`);
 
-  const isDoneExist = document.querySelector('button.done-button');
-
-  const goldFilled = 'gold-filled';
-  const goldEmpty = 'gold-empty';
-
-  if (progressBar){
+  if (progressBar) {
     progressBar.style.backgroundImage = 'linear-gradient(to bottom, #D4AB72 0, #B19164 100%)';
     progressBar.style.backgroundColor = '#D4AB72';
     progressBar.style.color = "#000";
   }
-
-  if (oldNext && !oldNext.classList.contains(goldFilled)) {
-    restyleButton(oldNext, goldFilled);
-    originNext = oldNext;
+  
+  if (popover) {
+    popover.style.backgroundColor = '#D4AB72';
   }
-
-
-  if (oldPrev && !oldPrev.classList.contains(goldEmpty)) {
-    restyleButton(oldPrev, goldEmpty);
-    oldPrev.style.marginRight = '72px';
-    originPrev = oldPrev;
+  
+  if (link) {
+    link.style.color = "#D4AB72";
   }
-
-  if (oldClear && !oldClear.classList.contains(goldEmpty)) {
-    restyleButton(oldClear, goldEmpty);
-    originClear = oldClear;
-  }
-
-  seekAndHideClear();
-  seekClose();
-
-  if (angularModal.modal.completed() && !isDoneExist) {
-    const buttonsWrapper = document.querySelector('div.modal-footer').children[0].children[0];
-
-    done = document.createElement('button');
-
-    done.innerHTML = 'Done';
-    done.className = "btn pull-right ng-scope gold-filled done-button";
-    done.setAttribute('type', 'button');
-    done.onclick = () => clickClose();
-
-    buttonsWrapper.appendChild(done);
-  }
-}
-
-  function seekAndHideNext() {
-    const oldNext = document.querySelector('button[ng-if="modal.showNext()"]');
 
     if (oldNext && !oldNext.classList.contains('hide-button')) {
       hideButton(oldNext);
       originNext = oldNext;
+      angularModal.modal = {
+        ...angularModal?.modal,
+        showNext: () => !!originNext,
+      }
     }
-  }
-
-  function seekAndHidePrev() {
-    const oldPrev = document.querySelector('button[ng-if="modal.showPrev()"]');
 
     if (oldPrev && !oldPrev.classList.contains('hide-button')) {
       hideButton(oldPrev);
       originPrev = oldPrev;
+      angularModal.modal = {
+        ...angularModal?.modal,
+        showPrev: () => !!originPrev,
+      }
     }
-  }
-
-  function seekAndHideClear() {
-    const oldClear = document.querySelector('button[ng-if="modal.showClear()"]');
 
     if (oldClear && !oldClear.classList.contains('hide-button')) {
       hideButton(oldClear);
       originClear = oldClear;
     }
-  }
-
-  function seekAndHideClose() {
-    const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
 
     if (oldClose && !oldClose.classList.contains('hide-button')) {
       hideButton(oldClose);
-      originClose = oldClose;
     }
-  }
-
-  function seekClose() {
-    const oldClose = document.querySelector('button[ng-click="modal.cancel()"]');
-
-    if (oldClose) {
-      originClose = oldClose;
-    }
-  }
-
-  function seekAndHide() {
-    seekAndHideNext();
-    seekAndHidePrev();
-    seekAndHideClear();
-    seekAndHideClose();
 }
 
 
 function findAngularModal() {
-  let modalElement = document.querySelector('.modal');
+  let modalElement = document.querySelector('.invest-now-modal');
+  
+  if (!modalElement) {
+    angularModal.modal = {
+      processing: true,
+      isLoading: true,
+      showNext: () => false,
+      showPrev: () => false,
+    }
+  } else {
+    // angularModal = angular.element(modalElement).scope();
+    checkModalState();
 
-  if (modalElement) {
-    angularModal = angular.element(modalElement).scope();
     clearInterval(angularModalTick);
-    console.log('modal is found');
+    console.log('modal is found', modalElement, angularModal);
   }
 }
 
 function checkBothButtons() {
-  if (!angularModal) {
+  if (angularModal === {}) {
     console.log("not ready");
     return;
   }
 
-  const current = angularModal.modal.getStateIndex();
-  // const total = angularModal.modal.invest_now_investment.states.length;
+  checkModalState();
+
   const isProcessed = !angularModal.modal.processing && !angularModal.modal.isLoading;
 
   if (customWatching && !isProcessed) {
@@ -209,6 +148,17 @@ function checkBothButtons() {
   }
 }
 
+function checkModalState() {
+  const spinner = document.querySelector('.loading-spinner');
+
+  angularModal.modal = {
+      processing: !spinner.classList.contains('ng-hide') || spinner.classList.length > 2,
+      isLoading: originNext?.childElementCount || originPrev?.childElementCount,
+      showNext: () => !!originNext,
+      showPrev: () => !!originPrev,
+    }
+}
+
 function startEventsTick() {
   eventsTick = setInterval(checkBothButtons, 100);
   customWatching = true;
@@ -222,7 +172,6 @@ function clearForm() {
 function ready() {
   console.log("document.DOMContentLoaded");
   const storageItem = 'ls.invest_now.sandbox';
-
   localStorage.removeItem(storageItem);
 }
 
@@ -250,9 +199,9 @@ autofillEvent.initEvent('fa.investnow.autofill', true, false);
 
 autofillEvent.investor = {
     "type": 'person',
-    "name": 'name',
-    "amount": '432',
-    "email": 'user@g.com',
+    "name": 'Test1 User1',
+    "amount": '250',
+    "email": 'vixem21903@etoymail.com',
 };
 
 var clearEvent = document.createEvent('Event');
@@ -264,10 +213,9 @@ window.onload = function() {
     // document.dispatchEvent(clearEvent);
     console.log('window.onload');
 
-    // buttonsTick = setInterval(seekAndHide, 100);
-    buttonsTick = setInterval(seekAndStyle, 100);
-    
+    buttonsTick = setInterval(seekAndHide, 100);
     angularModalTick = setInterval(findAngularModal, 133);
+
     startEventsTick();
 };
 

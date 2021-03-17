@@ -80,3 +80,12 @@ body {
   border: none !important;
   overflow: hidden;
 }
+
+#fa-invest-now-modal.classic {
+  color: white !important;
+}
+/* 
+  .modal-dialog {
+      width: 100vw;
+      margin: 0 auto;
+  } */
