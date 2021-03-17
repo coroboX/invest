@@ -152,7 +152,7 @@ function checkModalState() {
   const spinner = document.querySelector('.loading-spinner');
 
   angularModal.modal = {
-      processing: !spinner.classList.contains('ng-hide') || spinner.classList.length > 2,
+      processing: !spinner?.classList.contains('ng-hide') || spinner?.classList.length > 2,
       isLoading: originNext?.childElementCount || originPrev?.childElementCount,
       showNext: () => !!originNext,
       showPrev: () => !!originPrev,
