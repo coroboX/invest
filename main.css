@@ -89,7 +89,7 @@ body {
       width: 100vw;
       margin: 0 auto;
   } */
-.modal-dialog {
+.modal-content, .modal-dialog {
     border-right: none;
     border-left: none;
 }
