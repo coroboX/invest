@@ -92,4 +92,5 @@ body {
 .modal-content, .modal-dialog {
     border-right: none;
     border-left: none;
+    background: black;
 }
